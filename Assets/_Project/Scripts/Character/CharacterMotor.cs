@@ -5,12 +5,17 @@ namespace PITask.Character
     [RequireComponent(typeof(CharacterController))]
     public class CharacterMotor : MonoBehaviour
     {
-        [SerializeField] [Min(0.0f)] private float _maxSpeed = 5.0f;
         [SerializeField] [Min(0.0f)] private float _acceleration = 1.0f;
 
         private CharacterController _characterController;
         private Vector3 _velocity = Vector3.zero;
         private Vector3 _desiredVelocity = Vector3.zero;
+        private float _maxSpeed = 5.0f;
+
+        public float MaxSpeed {
+            get => _maxSpeed;
+            set => _maxSpeed = Mathf.Max(0.0f, value);
+        }
 
         private void Awake()
         {
