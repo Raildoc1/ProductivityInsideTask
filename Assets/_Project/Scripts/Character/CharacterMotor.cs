@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PITask.Stats;
+using UnityEngine;
 
 namespace PITask.Character
 {
@@ -12,11 +13,6 @@ namespace PITask.Character
         private Vector3 _desiredVelocity = Vector3.zero;
         private float _maxSpeed = 5.0f;
 
-        public float MaxSpeed {
-            get => _maxSpeed;
-            set => _maxSpeed = Mathf.Max(0.0f, value);
-        }
-
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
@@ -27,6 +23,15 @@ namespace PITask.Character
             var deltaTime = Time.deltaTime;
             _velocity = Vector3.MoveTowards(_velocity, _desiredVelocity, _acceleration * deltaTime);
             _characterController.Move(_velocity * deltaTime);
+            if(_velocity.sqrMagnitude > 0.0f)
+            {
+                transform.forward = _velocity.normalized;
+            }
+        }
+
+        public void Init(StatsDictionary stats)
+        {
+            _maxSpeed = stats.GetStat("CharacterSpeed");
         }
 
         public void Move(Vector2 direction)

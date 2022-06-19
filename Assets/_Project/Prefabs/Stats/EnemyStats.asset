@@ -17,3 +17,9 @@ MonoBehaviour:
     _value: 100
   - _name: CharacterSpeed
     _value: 5
+  - _name: ChaseDistance
+    _value: 5
+  - _name: MaxSpeed
+    _value: 3.5
+  - _name: Damage
+    _value: 20
