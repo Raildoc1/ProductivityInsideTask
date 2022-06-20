@@ -23,3 +23,5 @@ MonoBehaviour:
     _value: 3.5
   - _name: Damage
     _value: 20
+  - _name: AttackDistance
+    _value: 1.5

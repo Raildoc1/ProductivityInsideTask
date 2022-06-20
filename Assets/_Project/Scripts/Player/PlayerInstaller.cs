@@ -39,12 +39,21 @@ namespace PITask.Player
             _characterShooter.Init(_bulletPool, _stats);
             _playerMovementController.Init(_characterMotor, _input);
             _playerShootingController.Init(_characterShooter, _input);
+
+            _characterHealth.Die += Die;
         }
 
         public void Deinit()
         {
             _playerMovementController.Deinit();
             _playerShootingController.Deinit();
+
+            _characterHealth.Die -= Die;
+        }
+
+        private void Die()
+        {
+            Debug.Log("Game Over!");
         }
     }
 }

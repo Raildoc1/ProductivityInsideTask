@@ -11,7 +11,6 @@ namespace PITask.Core
         [Header("Player")]
         [SerializeField] private PlayerInstaller _playerInstaller;
         [SerializeField] private PlayerInput _playerInput;
-        [SerializeField] private InputType _inputType;
         [SerializeField] private Transform _initialPlayerPosition;
         [SerializeField] private EnemyInstaller _enemyInstaller;
 
@@ -19,16 +18,7 @@ namespace PITask.Core
 
         private void Start()
         {
-            switch (_inputType)
-            {
-                case InputType.KeyboardAndMouse:
-                    _playerInput.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
-                    break;
-                case InputType.Joystick:
-                    _playerInput.SwitchCurrentControlScheme(Joystick.current);
-                    break;
-            }
-            _inputHandler = new KeyboardPlayerInput();
+            _inputHandler = new KeyboardPlayerInput(); // TODO: implement other input types
 
             _inputHandler.Init(_playerInput);
             _playerInstaller.Init(_initialPlayerPosition, _inputHandler);

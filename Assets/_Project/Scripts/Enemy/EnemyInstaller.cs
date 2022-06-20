@@ -10,9 +10,10 @@ namespace PITask.Enemies
     {
         [SerializeField] private StatsDictionary _stats;
         [SerializeField] private CharacterDetector _characterDetector;
+        [SerializeField] private CharacterDetector _weapon;
 
         private CharacterHealth _characterHealth;
-        private CharacterHealth _player;
+        private CharacterAttack _characterAttack;
         private EnemyAI _enemyAI;
 
         public void Init(Transform initialPose)
@@ -27,11 +28,15 @@ namespace PITask.Enemies
             _characterHealth = GetComponent<CharacterHealth>();
             _enemyAI = GetComponent<EnemyAI>();
 
+            _characterAttack = new CharacterAttack(_stats);
+
             _characterHealth.Init(_stats);
             _characterDetector.Init(_stats.GetStat("ChaseDistance"));
+            _weapon.Init(_stats.GetStat("AttackDistance"));
             _enemyAI.Init(_characterDetector, _stats);
 
             _characterHealth.Die += Die;
+            _weapon.DetectCharacter += Attack;
         }
 
         public void Deinit()
@@ -39,6 +44,7 @@ namespace PITask.Enemies
             _enemyAI.Deinit();
 
             _characterHealth.Die -= Die;
+            _weapon.DetectCharacter -= Attack;
         }
 
         private void Die()
@@ -46,6 +52,11 @@ namespace PITask.Enemies
             //TODO: return to pool
             Deinit();
             Destroy(gameObject);
+        }
+
+        private void Attack(CharacterHealth target)
+        {
+            _characterAttack.DealDamageTo(target);
         }
     }
 }
