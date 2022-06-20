@@ -3,6 +3,7 @@ using PITask.Character.Health;
 using PITask.Input;
 using PITask.Shooting;
 using PITask.Stats;
+using PITask.UI;
 using UnityEngine;
 
 namespace PITask.Player
@@ -24,7 +25,9 @@ namespace PITask.Player
         private PlayerMovementController _playerMovementController = new PlayerMovementController();
         private PlayerShootingController _playerShootingController = new PlayerShootingController();
 
-        public void Init(Transform initialPose, IPlayerInputHandler input)
+        private WindowsManager _windowsManager;
+
+        public void Init(Transform initialPose, IPlayerInputHandler input, WindowsManager windowsManager)
         {
             _characterMotor = GetComponent<CharacterMotor>();
             _characterShooter = GetComponent<CharacterShooter>();
@@ -32,14 +35,13 @@ namespace PITask.Player
 
             _input = input;
 
-            transform.position = initialPose.position;
-            transform.rotation = initialPose.rotation;
-
             _characterHealth.Init(_stats, new SimpleDamage());
-            _characterMotor.Init(_stats);
+            _characterMotor.Init(_stats, initialPose);
             _characterShooter.Init(_bulletPool, _stats);
             _playerMovementController.Init(_characterMotor, _input);
             _playerShootingController.Init(_characterShooter, _input);
+
+            _windowsManager = windowsManager;
 
             _characterHealth.Die += Die;
         }
@@ -54,7 +56,7 @@ namespace PITask.Player
 
         private void Die()
         {
-            Debug.Log("Game Over!");
+            _windowsManager.TryShowWindow(WindowType.End);
         }
     }
 }

@@ -29,9 +29,14 @@ namespace PITask.Character
             }
         }
 
-        public void Init(StatsDictionary stats)
+        public void Init(StatsDictionary stats, Transform initialPose)
         {
             _maxSpeed = stats.GetStat("CharacterSpeed");
+
+            _characterController.enabled = false;
+            transform.position = initialPose.position;
+            transform.rotation = initialPose.rotation;
+            _characterController.enabled = true;
         }
 
         public void Move(Vector2 direction)

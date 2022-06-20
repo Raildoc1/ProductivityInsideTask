@@ -1,6 +1,7 @@
 using PITask.Enemies;
 using PITask.Input;
 using PITask.Player;
+using PITask.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,9 @@ namespace PITask.Core
         [Header("Enemies")]
         [SerializeField] private List<EnemyInstaller> _enemies;
 
+        [Header("UI")]
+        [SerializeField] private WindowsManager _windowsManager;
+
         private KeyboardPlayerInput _inputHandler;
 
         private void Start()
@@ -24,7 +28,8 @@ namespace PITask.Core
             _inputHandler = new KeyboardPlayerInput(); // TODO: implement other input types
 
             _inputHandler.Init(_playerInput);
-            _playerInstaller.Init(_initialPlayerPosition, _inputHandler);
+            _playerInstaller.Init(_initialPlayerPosition, _inputHandler, _windowsManager);
+
             foreach (var enemy in _enemies)
             {
                 enemy.Init();
@@ -38,6 +43,14 @@ namespace PITask.Core
             foreach (var enemy in _enemies)
             {
                 enemy.Deinit();
+            }
+        }
+
+        private void OnApplicationFocus(bool focus)
+        {
+            if(!focus)
+            {
+                _windowsManager.TryShowWindow(WindowType.Pause);
             }
         }
     }
