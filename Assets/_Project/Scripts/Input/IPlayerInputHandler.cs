@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PITask.Input
 {
@@ -7,6 +8,9 @@ namespace PITask.Input
     {
         event Action<Vector2> Move;
         event Action Fire;
+
+        void BlockInput();
+        void EnableInput();
     }
 }
 

@@ -12,13 +12,9 @@ namespace PITask.Character
         public event Action<CharacterHealth> DetectCharacter;
         public event Action<CharacterHealth> LoseCharacter;
 
-        private void Awake()
-        {
-            _sphereCollider = GetComponent<SphereCollider>();
-        }
-
         public void Init(float detectDistance)
         {
+            _sphereCollider = GetComponent<SphereCollider>();
             _sphereCollider.radius = detectDistance;
         }
 

@@ -23,12 +23,15 @@ namespace PITask.Core
 
         private KeyboardPlayerInput _inputHandler;
 
-        private void Start()
+        private void Awake()
         {
             _inputHandler = new KeyboardPlayerInput(); // TODO: implement other input types
 
             _inputHandler.Init(_playerInput);
             _playerInstaller.Init(_initialPlayerPosition, _inputHandler, _windowsManager);
+
+            _windowsManager.WindowShown += OnWindowShown;
+            _windowsManager.WindowHidden += OnWindowHidden;
 
             foreach (var enemy in _enemies)
             {
@@ -40,6 +43,10 @@ namespace PITask.Core
         {
             _playerInstaller.Deinit();
             _inputHandler.Deinit();
+
+            _windowsManager.WindowShown -= OnWindowShown;
+            _windowsManager.WindowHidden -= OnWindowHidden;
+
             foreach (var enemy in _enemies)
             {
                 enemy.Deinit();
@@ -53,6 +60,9 @@ namespace PITask.Core
                 _windowsManager.TryShowWindow(WindowType.Pause);
             }
         }
+
+        private void OnWindowShown(WindowType _) => _inputHandler.BlockInput();
+        private void OnWindowHidden(WindowType _) => _inputHandler.EnableInput();
     }
 
 }

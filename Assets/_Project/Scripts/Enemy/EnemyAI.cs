@@ -15,11 +15,6 @@ namespace PITask.Enemies
         private float _attackDistacne;
         private bool _attacked = false;
 
-        private void Awake()
-        {
-            _agent = GetComponent<NavMeshAgent>();
-        }
-
         private void Update()
         {
             if (!_player)
@@ -51,6 +46,7 @@ namespace PITask.Enemies
 
         public void Init(CharacterDetector detector, StatsDictionary stats)
         {
+            _agent = GetComponent<NavMeshAgent>();
             _agent.speed = stats.GetStat("MaxSpeed");
             _attackDistacne = stats.GetStat("AttackDistance");
             _detector = detector;

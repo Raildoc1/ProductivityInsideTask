@@ -13,11 +13,6 @@ namespace PITask.Character
         private Vector3 _desiredVelocity = Vector3.zero;
         private float _maxSpeed = 5.0f;
 
-        private void Awake()
-        {
-            _characterController = GetComponent<CharacterController>();
-        }
-
         private void Update()
         {
             var deltaTime = Time.deltaTime;
@@ -33,6 +28,7 @@ namespace PITask.Character
         {
             _maxSpeed = stats.GetStat("CharacterSpeed");
 
+            _characterController = GetComponent<CharacterController>();
             _characterController.enabled = false;
             transform.position = initialPose.position;
             transform.rotation = initialPose.rotation;

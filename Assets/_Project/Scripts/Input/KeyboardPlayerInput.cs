@@ -20,7 +20,6 @@ namespace PITask.Input
             _moveAction = input.currentActionMap.FindAction(MoveActionName);
             _fireAction = input.currentActionMap.FindAction(FireActionName);
 
-
             _moveAction.performed += OnMovePerformed;
             _moveAction.canceled += OnMoveCancelled;
             _fireAction.performed += OnFirePerformed;
@@ -36,5 +35,17 @@ namespace PITask.Input
         private void OnMovePerformed(InputAction.CallbackContext context) => Move?.Invoke(context.action.ReadValue<Vector2>());
         private void OnMoveCancelled(InputAction.CallbackContext context) => Move?.Invoke(Vector2.zero);
         private void OnFirePerformed(InputAction.CallbackContext context) => Fire?.Invoke();
+
+        public void BlockInput()
+        {
+            _moveAction.Disable();
+            _fireAction.Disable();
+        }
+
+        public void EnableInput()
+        {
+            _moveAction.Enable();
+            _fireAction.Enable();
+        }
     }
 }
