@@ -15,6 +15,7 @@ namespace PITask.Enemies
         private float _attackDistacne;
         private bool _attacked = false;
 
+        // TODO: implement via State Machine
         private void Update()
         {
             if (!_player)

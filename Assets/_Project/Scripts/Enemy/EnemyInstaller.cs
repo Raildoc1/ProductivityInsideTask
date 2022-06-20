@@ -30,9 +30,10 @@ namespace PITask.Enemies
             _characterHealth = GetComponent<CharacterHealth>();
             _enemyAI = GetComponent<EnemyAI>();
 
+            // Enemies with various Attack and Damage behaviours can be built via Factory pattern
             _characterAttack = new MultiplyAttack(new CharacterAttack(), _stats);
-
             _characterHealth.Init(_stats, new CriticalDamage((int)_stats.GetStat("CriticalHitAt")));
+
             _characterDetector.Init(_stats.GetStat("ChaseDistance"));
             _weapon.Init(_stats.GetStat("AttackDistance"));
             _enemyAI.Init(_characterDetector, _stats);

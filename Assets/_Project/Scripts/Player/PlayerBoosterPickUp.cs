@@ -15,7 +15,6 @@ namespace PITask.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Enter {other.gameObject.name}");
             if(other.TryGetComponent<ImmortalityBooster>(out var booster))
             {
                 booster.ApplyBooster(_health);
