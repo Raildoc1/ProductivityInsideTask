@@ -8,8 +8,10 @@ namespace PITask.Character.Health
     {
         private IDamageStrategy _damageStrategy;
         private float _currentHealth;
+        private bool _immortal = false;
 
         public bool Dead => _currentHealth <= 0.0f;
+        public bool Immortal => _immortal;
 
         public Action Die;
 
@@ -21,7 +23,7 @@ namespace PITask.Character.Health
 
         public void ApplyDamage(float value)
         {
-            if(Dead)
+            if(Dead || Immortal)
             {
                 return;
             }
@@ -37,6 +39,11 @@ namespace PITask.Character.Health
             {
                 Die?.Invoke();
             }
+        }
+
+        public void ApplyImmortality()
+        {
+            _immortal = true;
         }
     }
 }

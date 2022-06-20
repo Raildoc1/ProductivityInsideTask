@@ -15,6 +15,7 @@ namespace PITask.Player
     {
         [SerializeField] private StatsDictionary _stats;
         [SerializeField] private BulletPool _bulletPool;
+        [SerializeField] private PlayerBoosterPickUp _boosterPickup;
 
         private IPlayerInputHandler _input;
 
@@ -34,14 +35,14 @@ namespace PITask.Player
             _characterHealth = GetComponent<CharacterHealth>();
 
             _input = input;
+            _windowsManager = windowsManager;
 
             _characterHealth.Init(_stats, new SimpleDamage());
             _characterMotor.Init(_stats, initialPose);
             _characterShooter.Init(_bulletPool, _stats);
             _playerMovementController.Init(_characterMotor, _input);
             _playerShootingController.Init(_characterShooter, _input);
-
-            _windowsManager = windowsManager;
+            _boosterPickup.Init(_characterHealth);
 
             _characterHealth.Die += Die;
         }

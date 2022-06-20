@@ -28,6 +28,13 @@ namespace PITask.Enemies
 
             _agent.SetDestination(playerPosition);
 
+            if(_player.Immortal)
+            {
+                var direction = (position - playerPosition).normalized;
+                _agent.SetDestination(position + direction);
+                return;
+            }
+
             if (!_attacked && (distance < _attackDistacne))
             {
                 _attacked = true;
