@@ -1,4 +1,5 @@
 using PITask.Character;
+using PITask.Character.Health;
 using PITask.Input;
 using PITask.Shooting;
 using PITask.Stats;
@@ -34,7 +35,7 @@ namespace PITask.Player
             transform.position = initialPose.position;
             transform.rotation = initialPose.rotation;
 
-            _characterHealth.Init(_stats);
+            _characterHealth.Init(_stats, new SimpleDamage());
             _characterMotor.Init(_stats);
             _characterShooter.Init(_bulletPool, _stats);
             _playerMovementController.Init(_characterMotor, _input);

@@ -1,6 +1,7 @@
 using PITask.Enemies;
 using PITask.Input;
 using PITask.Player;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,9 @@ namespace PITask.Core
         [SerializeField] private PlayerInstaller _playerInstaller;
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private Transform _initialPlayerPosition;
-        [SerializeField] private EnemyInstaller _enemyInstaller;
+
+        [Header("Enemies")]
+        [SerializeField] private List<EnemyInstaller> _enemies;
 
         private KeyboardPlayerInput _inputHandler;
 
@@ -22,14 +25,20 @@ namespace PITask.Core
 
             _inputHandler.Init(_playerInput);
             _playerInstaller.Init(_initialPlayerPosition, _inputHandler);
-            _enemyInstaller.Init();
+            foreach (var enemy in _enemies)
+            {
+                enemy.Init();
+            }
         }
 
         private void OnDestroy()
         {
             _playerInstaller.Deinit();
             _inputHandler.Deinit();
-            _enemyInstaller.Deinit();
+            foreach (var enemy in _enemies)
+            {
+                enemy.Deinit();
+            }
         }
     }
 

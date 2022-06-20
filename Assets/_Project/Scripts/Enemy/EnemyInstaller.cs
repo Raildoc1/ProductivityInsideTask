@@ -1,4 +1,6 @@
 using PITask.Character;
+using PITask.Character.Attack;
+using PITask.Character.Health;
 using PITask.Stats;
 using UnityEngine;
 
@@ -13,7 +15,7 @@ namespace PITask.Enemies
         [SerializeField] private CharacterDetector _weapon;
 
         private CharacterHealth _characterHealth;
-        private CharacterAttack _characterAttack;
+        private IAttack _characterAttack;
         private EnemyAI _enemyAI;
 
         public void Init(Transform initialPose)
@@ -28,9 +30,9 @@ namespace PITask.Enemies
             _characterHealth = GetComponent<CharacterHealth>();
             _enemyAI = GetComponent<EnemyAI>();
 
-            _characterAttack = new CharacterAttack(_stats);
+            _characterAttack = new MultiplyAttack(new CharacterAttack(), _stats);
 
-            _characterHealth.Init(_stats);
+            _characterHealth.Init(_stats, new CriticalDamage((int)_stats.GetStat("CriticalHitAt")));
             _characterDetector.Init(_stats.GetStat("ChaseDistance"));
             _weapon.Init(_stats.GetStat("AttackDistance"));
             _enemyAI.Init(_characterDetector, _stats);
@@ -56,7 +58,7 @@ namespace PITask.Enemies
 
         private void Attack(CharacterHealth target)
         {
-            _characterAttack.DealDamageTo(target);
+            _characterAttack.DealDamageTo(target, _stats.GetStat("Damage"));
         }
     }
 }

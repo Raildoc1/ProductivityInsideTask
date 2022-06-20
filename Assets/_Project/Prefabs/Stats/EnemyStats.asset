@@ -25,3 +25,7 @@ MonoBehaviour:
     _value: 20
   - _name: AttackDistance
     _value: 1.5
+  - _name: CriticalHitAt
+    _value: 3
+  - _name: AttackMultiplier
+    _value: 2
